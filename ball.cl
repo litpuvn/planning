@@ -1,10 +1,5 @@
-% Path search in a (directed) graph, from one point to another, while passing through milestones.
-% Possible improvements:
-%  - make the milestones optional, by removing the constraint on path, and maximizing the number
-%    of different milestones that are encountered. Different priorities can then be assigned
-%    to path length and covered milestones.
-
-
+% Path search in a grid, from one point to goal
+% blank positions are where defenders are located. The ball cannot be driven there.
 
 % INSTANCE EXAMPLE
 % missing positions are simply those that are not practicables.
@@ -14,14 +9,11 @@ position(3,1).  position(3,2).                  position(3,4). position(3,5).
 position(4,1).  position(4,2).   position(4,3).                position(4,5).
 position(5,1).                                                 position(5,5).
 
-
 start(1,1).
 goals((5,1);(5,5)).  % will stop at one of them.
 
 % There is a slide that allow to go from 1,5 to 1,4, so the reverse move is not possible:
 blocked((1,4),(1,5)).
-
-% Best answer: 11 -> 12 -> 13 -> 24 -> 15 -> 25 -> 34 -> 43 -> 42 -> 51 -> 41 -> 31 -> 22 -> 11
 
 % PROGRAM
 #const path_maxlen=100.
@@ -43,12 +35,9 @@ pathlen(N):- path(N,_) ; not path(N+1,_).
 % A path that do not join the end is illegal.
 :- path(N,E) ; pathlen(N) ; not E=endgoal.
 % A path must go by all milestone.
-%:- not path(_,(X,Y)) ; milestone(X,Y).
-
 
 % Minimize the number of steps.
 #minimize{N: pathlen(N)}.
-
 
 % Outputs.
 #show path/2.
