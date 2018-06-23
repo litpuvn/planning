@@ -8,24 +8,20 @@
 
 % INSTANCE EXAMPLE
 % missing positions are simply those that are not practicables.
-position(1,1).                position(3,1). position(4,1). position(5,1).
-position(1,2). position(2,2). position(3,2). position(4,2).
-position(1,3). position(2,3).                position(4,3). position(5,3).
-position(1,4). position(2,4). position(3,4).                position(5,4).
-position(1,5). position(2,5). position(3,5). position(4,5). position(5,5).
+position(1,1).  position(1,2).   position(1,3). position(1,4). position(1,5).
+                position(2,2).   position(2,3). position(2,4). position(2,5).
+position(3,1).  position(3,2).                  position(3,4). position(3,5).
+position(4,1).  position(4,2).   position(4,3).                position(4,5).
+position(5,1).                                                 position(5,5).
 
-milestone(1,5).  % the two corners
-milestone(5,1).  % will pass by all of them.
 
 start(1,1).
-goals((1,1);(5,5)).  % will stop at one of them.
+goals((5,1);(5,5)).  % will stop at one of them.
 
 % There is a slide that allow to go from 1,5 to 1,4, so the reverse move is not possible:
 blocked((1,4),(1,5)).
 
 % Best answer: 11 -> 12 -> 13 -> 24 -> 15 -> 25 -> 34 -> 43 -> 42 -> 51 -> 41 -> 31 -> 22 -> 11
-
-
 
 % PROGRAM
 #const path_maxlen=100.
@@ -47,7 +43,7 @@ pathlen(N):- path(N,_) ; not path(N+1,_).
 % A path that do not join the end is illegal.
 :- path(N,E) ; pathlen(N) ; not E=endgoal.
 % A path must go by all milestone.
-:- not path(_,(X,Y)) ; milestone(X,Y).
+%:- not path(_,(X,Y)) ; milestone(X,Y).
 
 
 % Minimize the number of steps.
@@ -55,6 +51,4 @@ pathlen(N):- path(N,_) ; not path(N+1,_).
 
 
 % Outputs.
-#show.
 #show path/2.
-#show milestone(N,(X,Y)): milestone(X,Y), path(N,(X,Y)), path(M,_), not path(M,(X,Y)), M<N.
