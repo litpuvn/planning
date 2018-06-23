@@ -13,14 +13,17 @@ start(1,1).
 goals((5,1);(5,5)).  % will stop at one of them.
 
 % There is a slide that allow to go from 1,5 to 1,4, so the reverse move is not possible:
-blocked((1,4),(1,5)).
+%blocked((1,4),(1,5)).
 
 % PROGRAM set max-length
-#const path_maxlen=10.
+#const path_maxlen=100.
 
 % Define the graph links based on available positions.
-edge((X,Y),(I,J)):- position(X,Y) ; position(I,J) ; |X-I|=0..1 ; |Y-J|=0..1 ; |X-I|+|Y-J|=1..2 ; not blocked((X,Y),(I,J)).
 % allow diagonal moves. To disable it, make |X+Y-I-J| equals to 1 instead of 1..2.
+% no backward move, hence I-X=0..1
+edge((X,Y),(I,J)):- position(X,Y) ; position(I,J) ; I-X=0..1 ; |Y-J|=0..1 ; |X-I|+|Y-J|=1..2 ;
+not blocked((X,Y),(I,J)).
+
 
 % All user-defined goals are linked to the endgoal, a virtual node that is the real end.
 edge(G,endgoal):- goals(G).
@@ -34,7 +37,6 @@ pathlen(N):- path(N,_) ; not path(N+1,_).
 
 % A path that do not join the end is illegal.
 :- path(N,E) ; pathlen(N) ; not E=endgoal.
-% A path must go by all milestone.
 
 % Minimize the number of steps.
 #minimize{N: pathlen(N)}.
