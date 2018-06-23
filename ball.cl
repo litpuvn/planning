@@ -15,8 +15,8 @@ goals((5,1);(5,5)).  % will stop at one of them.
 % There is a slide that allow to go from 1,5 to 1,4, so the reverse move is not possible:
 blocked((1,4),(1,5)).
 
-% PROGRAM
-#const path_maxlen=100.
+% PROGRAM set max-length
+#const path_maxlen=10.
 
 % Define the graph links based on available positions.
 edge((X,Y),(I,J)):- position(X,Y) ; position(I,J) ; |X-I|=0..1 ; |Y-J|=0..1 ; |X-I|+|Y-J|=1..2 ; not blocked((X,Y),(I,J)).
