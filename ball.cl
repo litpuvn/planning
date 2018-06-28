@@ -8,7 +8,7 @@ position(3,1).  position(3,2).                  position(3,4). position(3,5).
 position(4,1).  position(4,2).   position(4,3).                position(4,5).
 position(5,1).                                                 position(5,5).
 
-% steps
+% STEPS
 #const n = 10 .
 step(0..n) .
 
