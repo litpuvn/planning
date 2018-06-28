@@ -27,9 +27,9 @@ goal(T) :- holds(ball_at(5, 1), T), step(T).
 
 % initial position
 holds(ball_at(1,1), 0) .
-occurs(move((1,1),(2,2)), 1) .
-occurs(move((2,2),(3,2)), 2) .
-occurs(move((3,2),(4,1)), 3) .
+occurs(move((1,1),(2,2)), 0) .
+occurs(move((2,2),(3,2)), 1) .
+occurs(move((3,2),(4,1)), 2) .
 
 #show occurs/2 .
 
