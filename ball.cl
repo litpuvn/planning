@@ -16,7 +16,8 @@ step(0..n) .
 fluent(ball_at(X,Y)) :- position(X,Y).
 
 % ACTION ------ "move" in our domain
-action(move((X,Y),(I,J))) :- holds(ball_at(X, Y)), position(I, J), I-X=0..1, |Y-J|=0..1, |X-I|+|Y-J|=1..2.
+%action(move((X,Y),(I,J))) :- holds(ball_at(X, Y)), position(I, J), I-X=0..1, |Y-J|=0..1, |X-I|+|Y-J|=1..2.
+action(move((X,Y),(I,J))) :- position(X, Y), position(I, J), I-X=0..1, |Y-J|=0..1, |X-I|+|Y-J|=1..2.
 
 % DYNAMIC CAUSAL law ------- action move causes ball_at
 holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T), position(X, Y), step(T), step(T+1) .
@@ -31,6 +32,6 @@ occurs(move((1,1),(2,2)), 1) .
 occurs(move((2,2),(3,2)), 2) .
 occurs(move((3,2),(4,1)), 3) .
 
-
+#show occurs/2 .
 
 
