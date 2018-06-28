@@ -12,10 +12,10 @@ position(5,1).                                                 position(5,5).
 #const n = 10 .
 step(0..n) .
 
-% fluent ball_at changes with time
+% FLUENT ball_at changes with time
 fluent(ball_at(X,Y)) :- position(X,Y).
 
-% action "move" in our domain
+% ACTION "move" in our domain
 action(move((X,Y),(I,J))) :- ball_at(X, Y), position(I, J) .
 
 % possible move
