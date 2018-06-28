@@ -28,15 +28,23 @@ holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), ball_at(I, J), positio
 %:- action(move((X,Y),(I,J))), occurs(move((X,Y),(I,J)), T), not possible(move((X,Y),(I,J)),T), step(T).
 
 % action generator
-1{occurs(Action, T): action(Action)}1 :- step(T), not goal(T), T < n .
+1{occurs(move((I,J),(X,Y)), T): action(move((I,J),(X,Y)))}10:- step(T), not goal(T), T < n .
 
 % initial position
 holds(ball_at(1,1), 0) .
 
 % Setting goals
-goal(T) :- holds(ball_at(5, 5), T) .
+goal(T) :- holds(ball_at(5, 1), T) .
 
 %success :- goal(T), T< n .
 %:- not success .
 
 %#show occurs/2.
+
+%occurs(move((1,1),(2,2)), 1) .
+%occurs(move((2,2),(3,2)), 2) .
+%occurs(move((3,2),(4,1)), 3) .
+%occurs(move((4,1),(5,1)), 4) .
+
+
+
