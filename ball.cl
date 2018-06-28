@@ -12,13 +12,13 @@ position(5,1).                                                 position(5,5).
 #const n = 10 .
 step(0..n) .
 
-% FLUENT ball_at changes with time
+% FLUENT ------ ball_at changes with time
 fluent(ball_at(X,Y)) :- position(X,Y).
 
-% ACTION "move" in our domain
+% ACTION ------ "move" in our domain
 action(move((X,Y),(I,J))) :- holds(ball_at(X, Y)), position(I, J), I-X=0..1, |Y-J|=0..1, |X-I|+|Y-J|=1..2.
 
-% DYNAMIC CAUSAL law: action move causes ball_at
+% DYNAMIC CAUSAL law ------- action move causes ball_at
 holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T), position(X, Y), step(T), step(T+1) .
 
 % initial position
