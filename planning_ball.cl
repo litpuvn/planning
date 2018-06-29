@@ -44,11 +44,14 @@ holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T
 % indirect effect, ball_at(X,Y) cause visited(X,Y)
 holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
 
+% ball cannot be at two positions at the same time
+%:- holds(ball_at(X,Y), T), holds(ball_at(I,J), T), position(X, Y), position(I, J), {I!=X; J != Y}, step(T).
+
 % impossible to move to the position which is visited
 -occurs(move((I,J), (X,Y)), T) :- holds(ball_at(I,J), T), holds(visited(X,Y), T), step(T).
 
 % should not move((I,J), (X,Y)) if the ball_at(X,Y) already
-:- holds(ball_at(X,Y), T), occurs(move((I,J), (X,Y)), T) .
+-occurs(move((I,J), (X,Y)), T) :- holds(ball_at(X,Y), T), position(I, J) .
 
 
 % ------- CHOICE RULES ---------------
