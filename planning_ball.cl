@@ -16,8 +16,6 @@ step(0..n) .
 fluent(inertial, ball_at(X,Y)) :- position(X,Y).
 fluent(defined, visited(X,Y)) :- position(X,Y).
 
-holds(visited(X,Y), T) :- holds(ball_at(X,Y), T).
-
 %% ---- CWA for Defined FLUENT ----
 -holds(F,T) :- fluent(defined,F), step(T), not holds(F,T).
 
@@ -25,12 +23,12 @@ holds(visited(X,Y), T) :- holds(ball_at(X,Y), T).
 %holds(F, T+1) :- holds(F, T), not -holds(F, T+1), step(T), T< n.
 %-holds(F, T+1) :- -holds(F, T), not holds(F, T+1), step(T), T< n.
 
-%% General Inertia Axiom
+%% INERTIA AXIOM for inertial FLUENT
 holds(F,T+1) :- fluent(inertial,F), holds(F,T), not -holds(F,T+1), T < n.
 -holds(F,I+1) :- fluent(inertial,F), -holds(F,I), not holds(F,I+1), I < n.
 
 %% CWA for Actions
-%-occurs(A,T) :- action(A), step(T), not occurs(A,T), step(T).
+-occurs(A,T) :- action(A), step(T), not occurs(A,T), step(T).
 
 % ACTION ------ "move" in our domain
 action(move((X,Y),(I,J))) :- position(X, Y), position(I, J), I-X=0..1, |Y-J|=0..1, |X-I|+|Y-J|=1..2.
@@ -43,7 +41,10 @@ holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T
 -holds(ball_at(X,Y), T+2) :- holds(ball_at(X,Y), T), step(T), step(T+2) .
 %-occurs(move((I,J), (X,Y)), T+1) :- holds(move((X,Y),(I, J)), T), step(T), step(T+1) .
 
-% impossible to move to the node which is visited
+% indirect effect, when the ball moves causes visited
+holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y).
+
+% impossible to move to the position which is visited
 -occurs(move((I,J), (X,Y)), T) :- holds(ball_at(I,J), T), holds(visited(X,Y), T).
 
 % ------- CHOICE RULES ---------------
