@@ -34,7 +34,7 @@ holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T
 
 % ---- CONSTRAINTS and HEURISTICS --------------
 % not moving back
-%:- occurs(move((I,J), (X,Y)), T+1);  holds(move((X,Y),(I, J)), T); position(X, Y); position(I, J); step(T); step(T+1) .
+-occurs(move((I,J), (X,Y)), T+1) :- holds(move((X,Y),(I, J)), T), holds(ball_at(X,Y), T), position(I, J), step(T), step(T+1) .
 
 % ------- CHOICE RULES ---------------
 success :- goal(T), T <= n.
@@ -44,7 +44,7 @@ success :- goal(T), T <= n.
 % ---------- GOAL ----------------
 goal(T) :- holds(ball_at(5, 1), T), step(T).
 
-% initial position
+% -------- INITIAL position --------------
 holds(ball_at(1,1), 0) .
 
 #show occurs/2 .
