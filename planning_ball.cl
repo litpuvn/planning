@@ -13,11 +13,18 @@ position(5,1).                                                 position(5,5).
 step(0..n) .
 
 % FLUENT ------ ball_at changes with time
-fluent(ball_at(X,Y)) :- position(X,Y).
+fluent(inertial, ball_at(X,Y)) :- position(X,Y).
 
 % INERTIA AXIOM ------- normally things stay as they are
-holds(F, T+1) :- holds(F, T), not -holds(F, T+1), step(T), T< n.
--holds(F, T+1) :- -holds(F, T), not holds(F, T+1), step(T), T< n.
+%holds(F, T+1) :- holds(F, T), not -holds(F, T+1), step(T), T< n.
+%-holds(F, T+1) :- -holds(F, T), not holds(F, T+1), step(T), T< n.
+
+%% General Inertia Axiom
+%holds(F,T+1) :- fluent(inertial,F), holds(F,T), not -holds(F,T+1), T < n.
+%-holds(F,I+1) :- fluent(inertial,F), -holds(F,I), not holds(F,I+1), I < n.
+
+%% CWA for Actions
+-occurs(A,T) :- action(A), step(T), not occurs(A,T), step(T).
 
 % ACTION ------ "move" in our domain
 action(move((X,Y),(I,J))) :- position(X, Y), position(I, J), I-X=0..1, |Y-J|=0..1, |X-I|+|Y-J|=1..2.
