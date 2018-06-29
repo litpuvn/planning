@@ -37,7 +37,7 @@ action(move((X,Y),(I,J))) :- position(X, Y), position(I, J), I-X=0..1, |Y-J|=0..
 holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T), position(X, Y), step(T), step(T+1) .
 
 % clear previous position after the move
-holds(-ball_at(I,J), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T), position(X, Y), step(T), step(T+1) .
+-holds(ball_at(I,J), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T), position(X, Y), step(T), step(T+1) .
 
 % ---- CONSTRAINTS and HEURISTICS --------------
 % not moving back
@@ -47,7 +47,7 @@ holds(-ball_at(I,J), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), 
 % indirect effect, ball_at(X,Y) cause visited(X,Y)
 holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
 
-% ball cannot be at two positions at the same time
+% ball cannot be at two positions at the same time - this is done via causal law -clear off previous position
 %:- holds(ball_at(X,Y), T), holds(ball_at(I,J), T), position(X, Y), position(I, J), {I!=X; J != Y}, step(T).
 
 % impossible to move to the position which is visited
