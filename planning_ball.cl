@@ -39,7 +39,7 @@ holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T
 % ---- CONSTRAINTS and HEURISTICS --------------
 % not moving back
 %-holds(ball_at(X,Y), T+2) :- holds(ball_at(X,Y), T), step(T), step(T+2) .
-%-occurs(move((I,J), (X,Y)), T+1) :- holds(move((X,Y),(I, J)), T), {I!=X;J!=Y}, step(T), step(T+1) .
+-occurs(move((I,J), (X,Y)), T+1) :- holds(move((X,Y),(I, J)), T), {I!=X;J!=Y}, step(T), step(T+1) .
 
 % indirect effect, ball_at(X,Y) cause visited(X,Y)
 holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
