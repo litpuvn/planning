@@ -72,7 +72,7 @@ success :- goal(T), T <= n.
 goal(T) :- holds(ball_at(5, 1), T), step(T).
 
 % -------- INITIAL position --------------
-holds(ball_at(1,1), 0) .
+holds(ball_at(1,3), 0) .
 
 #show occurs/2 .
 %#show holds/2 .
