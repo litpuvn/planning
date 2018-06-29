@@ -40,15 +40,15 @@ holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T
 -holds(ball_at(I,J), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T), position(X, Y), step(T), step(T+1) .
 
 % ---- CONSTRAINTS and HEURISTICS --------------
+
+% ball cannot be at two places
+-holds(ball_at(X,Y), T) :- holds(ball_at(I,J), T), position(X,Y), position(I,J), {I!=X; J!=Y}, step(T).
+
 % not moving back
--holds(ball_at(X,Y), T) :- holds(ball_at(X,Y), T), step(T).
 -occurs(move((I,J), (X,Y)), T+1) :- holds(move((X,Y),(I, J)), T), {I!=X;J!=Y}, step(T), step(T+1) .
 
 % indirect effect, ball_at(X,Y) cause visited(X,Y)
 holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
-
-% ball cannot be at two positions at the same time - this is done via second causal law -clear off previous position
-%:- holds(ball_at(X,Y), T), holds(ball_at(I,J), T), position(X, Y), position(I, J), {I!=X; J != Y}, step(T).
 
 % impossible to move to the position which is visited
 -occurs(move((I,J), (X,Y)), T) :- holds(ball_at(I,J), T), holds(visited(X,Y), T), step(T).
