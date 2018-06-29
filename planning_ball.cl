@@ -19,7 +19,7 @@ fluent(defined, visited(X,Y)) :- position(X,Y).
 holds(visited(X,Y), T) :- holds(ball_at(X,Y), T).
 
 %% ---- CWA for Defined FLUENT ----
-%-holds(F,T) :- fluent(defined,F), step(T), not holds(F,T).
+-holds(F,T) :- fluent(defined,F), step(T), not holds(F,T).
 
 % INERTIA AXIOM ------- normally things stay as they are
 %holds(F, T+1) :- holds(F, T), not -holds(F, T+1), step(T), T< n.
