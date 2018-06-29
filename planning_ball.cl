@@ -47,6 +47,8 @@ holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
 % impossible to move to the position which is visited
 -occurs(move((I,J), (X,Y)), T) :- holds(ball_at(I,J), T), holds(visited(X,Y), T), step(T).
 
+% should not move((I,J), (X,Y)) if the ball_at(X,Y) already
+:- holds(ball_at(X,Y), T), occurs(move((I,J), (X,Y)), T) .
 
 
 % ------- CHOICE RULES ---------------
