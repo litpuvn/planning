@@ -42,10 +42,13 @@ holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T
 % ---- CONSTRAINTS and HEURISTICS --------------
 
 % ball cannot be at two places
--holds(ball_at(X,Y), T) :- holds(ball_at(I,J), T), position(X,Y), position(I,J), {I!=X; J!=Y}, step(T).
+%-holds(ball_at(X,Y), T) :- holds(ball_at(I,J), T), position(X,Y), position(I,J), {I!=X; J!=Y}, step(T).
+-holds(ball_at(X,Y), T) :- holds(ball_at(I,J), T), position(X,Y), position(I,J), X != I, step(T).
+-holds(ball_at(X,Y), T) :- holds(ball_at(I,J), T), position(X,Y), position(I,J), Y != J, step(T).
 
 % not moving back
--occurs(move((I,J), (X,Y)), T+1) :- holds(move((X,Y),(I, J)), T), {I!=X;J!=Y}, step(T), step(T+1) .
+%-occurs(move((I,J), (X,Y)), T+1) :- holds(move((X,Y),(I, J)), T), step(T), step(T+1) .
+-holds(ball_at(X,Y), T+2) :- holds(ball_at(X,Y), T), step(T), step(T+2) .
 
 % indirect effect, ball_at(X,Y) cause visited(X,Y)
 holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
