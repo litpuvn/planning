@@ -53,6 +53,9 @@ holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
 % impossible to move to the position which is visited
 -occurs(move((I,J), (X,Y)), T) :- holds(ball_at(I,J), T), holds(visited(X,Y), T), step(T).
 
+% impossible to move((I,J), (X,Y)) if the ball is not at that position ball_at(I,J)
+-occurs(move((I,J), (X,Y)), T) :- holds(-ball_at(I,J), T), position(X,Y), step(T).
+
 % should not move((I,J), (X,Y)) if the ball_at(X,Y) already
 -occurs(move((I,J), (X,Y)), T) :- holds(ball_at(X,Y), T), position(I, J) .
 
