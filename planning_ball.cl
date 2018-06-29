@@ -25,7 +25,7 @@ fluent(defined, visited(X,Y)) :- position(X,Y).
 
 %% INERTIA AXIOM for inertial FLUENT
 holds(F,T+1) :- fluent(inertial,F), holds(F,T), not -holds(F,T+1), T < n.
--holds(F,I+1) :- fluent(inertial,F), -holds(F,I), not holds(F,I+1), I < n.
+-holds(F,T+1) :- fluent(inertial,F), -holds(F,T), not holds(F,T+1), T < n.
 
 %% CWA for Actions
 -occurs(A,T) :- action(A), step(T), not occurs(A,T), step(T).
