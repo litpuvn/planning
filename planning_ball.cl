@@ -9,7 +9,7 @@ position(4,1).  position(4,2).   position(4,3). position(4,4). position(4,5).
 position(5,1).                                                 position(5,5).
 
 % STEPS
-#const n = 10 .
+#const n = 5 .
 step(0..n) .
 
 % FLUENT ------ ball_at changes with time
@@ -65,9 +65,8 @@ holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
 -occurs(move((I,J), (X,Y)), T) :- holds(ball_at(X,Y), T), position(I, J) .
 
 % impossible to move to the reverse direction
--occurs(move((I,J), (X,Y)), T) :- holds(directionLeft, T), position(I, J), position(X, Y), Y-J=1 .
-
-%-occurs(move((I,J), (X,Y)), T) :- -holds(directionLeft, T), position(I, J), position(X, Y), J-Y=0..1  .
+-occurs(move((I,J), (X,Y)), T) :- holds(directionLeft, T), holds(ball_at(I, J), T), position(X, Y), Y-J>0 .
+-occurs(move((I,J), (X,Y)), T) :- -holds(directionLeft, T), holds(ball_at(I, J), T), position(X, Y), J-Y < 0  .
 
 
 % ------- CHOICE RULES ---------------
@@ -80,7 +79,7 @@ goal(T) :- holds(ball_at(5, 1), T), step(T).
 
 % -------- INITIAL position --------------
 holds(ball_at(1,3), 0) .
-holds(directionLeft, 0) .
+-holds(directionLeft, 0) .
 
 #show occurs/2 .
 %#show holds/2 .
