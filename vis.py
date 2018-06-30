@@ -4,6 +4,7 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import logging
 import sys
+import argparse
 
 np.random.seed(1)
 PhotoImage = ImageTk.PhotoImage
@@ -146,8 +147,23 @@ class Env(tk.Tk):
         return logger
 
 
+def get_parser():
+    """Get parser for command line arguments."""
+    parser = argparse.ArgumentParser(description="Tweet Downloader")
+    parser.add_argument("-d",
+                        "--data",
+                        dest="data",
+                        help="Read data from file or display initial setting",
+                        default=False)
+
+    return parser
+
 
 if __name__ == "__main__":
+
+    parser = get_parser()
+    args = parser.parse_args()
+
     info = {
         "env": {"Ny": 5,
                 "Nx": 5},
@@ -156,14 +172,17 @@ if __name__ == "__main__":
     env = Env(info)
 
     occurs = []
-    with open('data.txt') as filePointer:
-        for line in filePointer:
-            line = line.strip()
-            if len(line) < 10 or line.startswith('#'):
-                continue
-            occurs = line.split(' ')
+    data = int(args.data)
 
-            break
+    if data != 0:
+        with open('data.txt') as filePointer:
+            for line in filePointer:
+                line = line.strip()
+                if len(line) < 10 or line.startswith('#'):
+                    continue
+                occurs = line.split(' ')
+
+                break
     for occur in occurs:
         sub = occur[(occur.rfind('(') + 1):]
         sub = sub[0:sub.find(')')]
