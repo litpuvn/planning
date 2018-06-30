@@ -158,7 +158,9 @@ if __name__ == "__main__":
     occurs = []
     with open('data.txt') as filePointer:
         for line in filePointer:
-
+            line = line.strip()
+            if len(line) < 10 or line.startswith('#'):
+                continue
             occurs = line.split(' ')
 
             break
