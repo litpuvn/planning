@@ -82,12 +82,6 @@ goal(T) :- holds(ball_at(5, 1), T), step(T).
 holds(ball_at(1,3), 0) .
 holds(directionLeft, 0) .
 
-
-
-% -------- INITIAL position --------------
-holds(ball_at(1,3), 0) .
-holds(directionLeft, 0) .
-
 occurs(move((1,3),(2,2)), 0) .
 occurs(move((2,2),(3,1)), 1) .
 occurs(move((3,1),(4,1)), 2) .
