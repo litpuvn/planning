@@ -73,7 +73,7 @@ holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
 % ------- CHOICE RULES ---------------
 success :- goal(T), T <= n.
 :- not success.
-1{occurs(Action, T): action(Action)}1 :- step(T), not goal(T), T < n.
+%1{occurs(Action, T): action(Action)}1 :- step(T), not goal(T), T < n.
 
 % ---------- GOAL ----------------
 goal(T) :- holds(ball_at(5, 1), T), step(T).
