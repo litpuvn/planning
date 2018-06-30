@@ -13,13 +13,6 @@ PhotoImage = ImageTk.PhotoImage
 
 IMAGE_ICON_SIZE = 25
 
-GO_UP = 0
-GO_DOWN = 1
-GO_LEFT = 2
-GO_RIGHT = 3
-
-STEP_PENALTY = -1
-INVALID_STEP_PENALTY = -10
 
 class Env(tk.Tk):
     def __init__(self, info):
@@ -74,6 +67,13 @@ class Env(tk.Tk):
         y2 = self._get_column_center_pixel(pos)
 
         return self.canvas.create_image(y2, x2, image=self.shapes[resource_index])
+
+    def add_item_at_row_col(self, row, col, resource_index):
+
+        x = int(row*self.UNIT + self.UNIT / 2)
+        y = int(col*self.UNIT + self.UNIT / 2)
+
+        return self.canvas.create_image(y, x, image=self.shapes[resource_index])
 
     def _get_row(self, pos):
         return pos // self.WIDTH
@@ -155,12 +155,25 @@ if __name__ == "__main__":
 
     env = Env(info)
 
+    occurs = []
     with open('data.txt') as filePointer:
         for line in filePointer:
 
             occurs = line.split(' ')
 
             break
+    for occur in occurs:
+        sub = occur[(occur.rfind('(') + 1):]
+        sub = sub[0:sub.find(')')]
+
+        pos_row = sub[0:sub.find(',')]
+        pos_col = sub[(sub.find(',')+1):]
+        row = int(pos_row) - 1
+        col = int(pos_col) - 1
+
+        BALL = 2
+        env.add_item_at_row_col(row, col, BALL)
+        # break
 
     while True:
         env.render()
