@@ -15,6 +15,8 @@ step(0..n) .
 % FLUENT ------ ball_at changes with time
 fluent(inertial, ball_at(X,Y)) :- position(X,Y).
 fluent(defined, visited(X,Y)) :- position(X,Y).
+fluent(inertial, directionLeft).
+
 
 %% ---- CWA for Defined FLUENT ----
 -holds(F,T) :- fluent(defined,F), step(T), not holds(F,T).
@@ -62,6 +64,11 @@ holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
 % should not move((I,J), (X,Y)) if the ball_at(X,Y) already
 -occurs(move((I,J), (X,Y)), T) :- holds(ball_at(X,Y), T), position(I, J) .
 
+% impossible to move to the reverse direction
+-occurs(move((I,J), (X,Y)), T) :- holds(directionLeft, T), position(I, J), position(X, Y), Y-J=1 .
+
+%-occurs(move((I,J), (X,Y)), T) :- -holds(directionLeft, T), position(I, J), position(X, Y), J-Y=0..1  .
+
 
 % ------- CHOICE RULES ---------------
 success :- goal(T), T <= n.
@@ -73,6 +80,7 @@ goal(T) :- holds(ball_at(5, 1), T), step(T).
 
 % -------- INITIAL position --------------
 holds(ball_at(1,3), 0) .
+holds(directionLeft, 0) .
 
 #show occurs/2 .
 %#show holds/2 .
