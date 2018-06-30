@@ -66,7 +66,7 @@ holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
 
 % impossible to move to the reverse direction
 -occurs(move((I,J), (X,Y)), T) :- holds(directionLeft, T), holds(ball_at(I, J), T), position(X, Y), Y-J>0 .
--occurs(move((I,J), (X,Y)), T) :- -holds(directionLeft, T), holds(ball_at(I, J), T), position(X, Y), J-Y < 0  .
+-occurs(move((I,J), (X,Y)), T) :- -holds(directionLeft, T), holds(ball_at(I, J), T), position(X, Y), Y-J < 0  .
 
 
 % ------- CHOICE RULES ---------------
@@ -76,6 +76,7 @@ success :- goal(T), T <= n.
 
 % ---------- GOAL ----------------
 goal(T) :- holds(ball_at(5, 1), T), step(T).
+goal(T) :- holds(ball_at(5, 5), T), step(T).
 
 % -------- INITIAL position --------------
 holds(ball_at(1,3), 0) .
