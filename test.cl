@@ -1,5 +1,2 @@
-innocent(Suspect) :- motive(Suspect), not guilty(Suspect).
-motive(harry).
-motive(sally).
-guilty(harry).
-
+-occurs(switch_on, T+1) :- occurs(switch_off, T), step(T), step(T+1) .
+-occurs(switch_off, T+1) :- occurs(switch_on, T), step(T), step(T+1) .
