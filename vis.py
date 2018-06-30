@@ -51,36 +51,29 @@ class Env(tk.Tk):
         # ************* from other file ******************
 
     def _create_elements(self):
-        x1 = self._get_row_center_pixel(2)
-        y1 = self._get_column_center_pixel(2)
-        resource_ball_static = self.canvas.create_image(y1, x1, image=self.shapes[4])
+
+        CROSS_BLOCK = 3
+        STATIC_BALL = 4
+
+        # ball initial position
+        resource_ball_static = self.add_item_at(2, STATIC_BALL)
 
         # defenders
-        x2 = self._get_row_center_pixel(11)
-        y2 = self._get_column_center_pixel(11)
-        resource_blocked_defender_1 = self.canvas.create_image(y2, x2, image=self.shapes[3])
-
-        x2 = self._get_row_center_pixel(12)
-        y2 = self._get_column_center_pixel(12)
-        resource_blocked_defender_2 = self.canvas.create_image(y2, x2, image=self.shapes[3])
-
-        x2 = self._get_row_center_pixel(13)
-        y2 = self._get_column_center_pixel(13)
-        resource_blocked_defender_3 = self.canvas.create_image(y2, x2, image=self.shapes[3])
-
+        resource_blocked_defender_1 = self.add_item_at(11, CROSS_BLOCK)
+        resource_blocked_defender_2 = self.add_item_at(12, CROSS_BLOCK)
+        resource_blocked_defender_3 = self.add_item_at(13, CROSS_BLOCK)
 
         # goal keeper
-        x2 = self._get_row_center_pixel(21)
-        y2 = self._get_column_center_pixel(21)
-        resource_blocked_1 = self.canvas.create_image(y2, x2, image=self.shapes[3])
+        resource_blocked_1 = self.add_item_at(21, CROSS_BLOCK)
+        resource_blocked_2 = self.add_item_at(22, CROSS_BLOCK)
+        resource_blocked_3 = self.add_item_at(23, CROSS_BLOCK)
 
-        x2 = self._get_row_center_pixel(22)
-        y2 = self._get_column_center_pixel(22)
-        resource_blocked_2 = self.canvas.create_image(y2, x2, image=self.shapes[3])
+    def add_item_at(self, pos, resource_index):
 
-        x2 = self._get_row_center_pixel(23)
-        y2 = self._get_column_center_pixel(23)
-        resource_blocked_3 = self.canvas.create_image(y2, x2, image=self.shapes[3])
+        x2 = self._get_row_center_pixel(pos)
+        y2 = self._get_column_center_pixel(pos)
+
+        return self.canvas.create_image(y2, x2, image=self.shapes[resource_index])
 
     def _get_row(self, pos):
         return pos // self.WIDTH
@@ -161,6 +154,13 @@ if __name__ == "__main__":
     }
 
     env = Env(info)
+
+    with open('data.txt') as filePointer:
+        for line in filePointer:
+
+            occurs = line.split(' ')
+
+            break
 
     while True:
         env.render()
