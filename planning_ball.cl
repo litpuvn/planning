@@ -9,7 +9,7 @@ position(4,1).  position(4,2).   position(4,3). position(4,4). position(4,5).
 position(5,1).                                                 position(5,5).
 
 % STEPS
-#const n = 5 .
+#const n = 15 .
 step(0..n) .
 
 % FLUENT ------ ball_at changes with time
@@ -49,8 +49,8 @@ holds(ball_at(X,Y), T+1) :- occurs(move((I,J),(X,Y)), T), holds(ball_at(I, J), T
 -holds(ball_at(X,Y), T) :- holds(ball_at(I,J), T), position(X,Y), position(I,J), Y != J, step(T).
 
 % not moving back
-%-occurs(move((I,J), (X,Y)), T+1) :- holds(move((X,Y),(I, J)), T), step(T), step(T+1) .
--holds(ball_at(X,Y), T+2) :- holds(ball_at(X,Y), T), step(T), step(T+2) .
+-occurs(move((I,J), (X,Y)), T+1) :- holds(move((X,Y),(I, J)), T), step(T), step(T+1) .
+%-holds(ball_at(X,Y), T+2) :- holds(ball_at(X,Y), T), step(T), step(T+2) .
 
 % indirect effect, ball_at(X,Y) cause visited(X,Y)
 holds(visited(X,Y), T) :- holds(ball_at(X,Y), T), position(X, Y), step(T).
